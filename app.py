@@ -195,8 +195,12 @@ def parse_num(val):
         stripped = str(val).strip()
         if stripped == "":
             return None
-        return float(stripped)
-    except (ValueError, TypeError):
+        num = float(stripped)
+        # Validate it's a normal number (not inf/nan)
+        if not (num == num and abs(num) != float('inf')):
+            return None
+        return num
+    except (ValueError, TypeError, OverflowError):
         return None
 
 
@@ -236,7 +240,7 @@ if violations:
         + "\n\nPredictions in this region may be less reliable."
     )
 elif fallback_used:
-    st.caption(f"Using default values for empty fields: {', '.join(fallback_used)}. You can enter values to override these defaults.")
+    st.caption(f"Using default values for empty fields empty fields: {', '.join(fallback_used)}. You can enter values to override these defaults.")
 
 # Predict and Reset buttons side-by-side
 col1, col2 = st.columns([1, 1])
