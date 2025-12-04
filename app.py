@@ -419,11 +419,14 @@ if predict:
             ax.set_xticks([0, 20, 40, 60, 80, 100])
             ax.set_xticklabels(["0", "20", "40", "60", "80", "100"])
 
+            # ax.set_yticks([0, 10, 20, 30, 40])
+            ax.set_yticklabels([f"{int(float(y.get_text().replace('−', '-')) * 100)}" for y in ax.get_yticklabels()])
+
             ax.scatter([age_val], [proba], color=bar_color, s=90, zorder=4, edgecolor="white", linewidth=0.8)
             ax.scatter([matched_age], [age_mean], color="#bbbbbb", s=70, zorder=5, edgecolor="white", linewidth=0.8)
             ax.scatter([matched_age], [age_q30], color="#2ca02c", s=70, zorder=5, edgecolor="white", linewidth=0.8)
             ax.set_xlabel("Age (Years)", labelpad=10)
-            ax.set_ylabel("Calibrated probability", labelpad=10)
+            ax.set_ylabel("Calibrated Probability [%]", labelpad=10)
 
             def annotate_point(x_val, y_val, text, color, dx=6, dy=0.05):
                 """Attach a floating label with an arrow to a point."""
@@ -474,7 +477,7 @@ with st.expander("Additional Details"):
     st.markdown("### Methodological Notes & Citations")
     st.markdown(
         """
-        This risk model was trained on the Calgary Bloodstream Infection Cohort (CBSIC) using:
+        This risk model was trained on the Calgary Bloodstream Infection Cohort (_CBSIC_) using:
 
         - **XGBoost** classifier with class weighting
         - **Isotonic regression calibration** on a held-out 15% validation set
