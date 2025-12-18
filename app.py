@@ -428,6 +428,7 @@ if predict:
             matplotlib.use('Agg') # Prevents searching for GUI backends (Tk, Qt)
             import matplotlib.pyplot as plt
             import seaborn as sns
+            from matplotlib.ticker import FuncFormatter
 
             if age_note:
                 st.caption(age_note)
@@ -442,8 +443,10 @@ if predict:
             ax.set_xticks([0, 20, 40, 60, 80, 100])
             ax.set_xticklabels(["0", "20", "40", "60", "80", "100"])
 
-            # ax.set_yticks([0, 10, 20, 30, 40])
-            ax.set_yticklabels([f"{int(float(y.get_text().replace('−', '-')) * 100)}" for y in ax.get_yticklabels()])
+            # yticks = ax.get_yticks()
+            # ax.set_yticklabels([f"{int(t * 100)}" for t in yticks])
+
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f"{int(y * 100)}"))
 
             ax.scatter([age_val], [proba], color=bar_color, s=90, zorder=4, edgecolor="white", linewidth=0.8)
             ax.scatter([matched_age], [age_mean], color="#bbbbbb", s=70, zorder=5, edgecolor="white", linewidth=0.8)
