@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pickle
 import pandas as pd
+import math
 
 # -----------------------------
 # Widen the main content area
@@ -197,8 +198,7 @@ def parse_num(val):
         if stripped == "":
             return None, "blank"
         num = float(stripped)
-        # Validate it's a normal number (not inf/nan)
-        if not (num == num and abs(num) != float('inf')):
+        if not math.isfinite(num):
             return None, "non-finite"
         return num, None
     except (ValueError, TypeError, OverflowError):
