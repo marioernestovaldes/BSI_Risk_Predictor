@@ -111,7 +111,7 @@ def load_calibration_data(path: str):
 # Session state for resettable fields
 # ------------------------
 default_values = dict(age="", cci="", pbs="", sofa="")
-fallback_defaults = dict(age=63, cci=2, pbs=0, sofa=0)  # used when fields are left blank; we used cci=2 because that's the cci for a 63 years old person with no comorbidities
+fallback_defaults = dict(age=63, cci=2, pbs=0, sofa=0)  # used when fields are left blank; we used cci=2 because that's the cci for a 63-year-old person with no comorbidities
 for k, v in default_values.items():
     if k not in st.session_state:
         st.session_state[k] = v
