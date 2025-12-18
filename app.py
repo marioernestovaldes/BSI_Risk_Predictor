@@ -221,6 +221,7 @@ for field_key, raw_val in [("age", age), ("cci", cci), ("pbs", pbs), ("sofa", so
 
 fallback_used = []
 fallback_invalid = []
+fallback_blanks = []
 reason_labels = {
     "blank": "left blank",
     "not-a-number": "not a number",
@@ -235,6 +236,8 @@ for field in ["age", "cci", "pbs", "sofa"]:
         fallback_used.append(entry)
         if reason != "blank":
             fallback_invalid.append(entry)
+        else:
+            fallback_blanks.append(entry)
 
 # Unpack back to individual variables for downstream code
 age_val = parsed_vals["age"]
@@ -262,8 +265,8 @@ if fallback_invalid:
         "⚠️ Some entries were invalid and replaced with defaults:\n\n"
         + "\n".join([f"- {entry}" for entry in fallback_invalid])
     )
-elif fallback_used:
-    st.caption(f"Using default values for empty fields: {', '.join(fallback_used)}. You can enter values to override these defaults.")
+if fallback_blanks:
+    st.caption(f"Using default values for empty fields: {', '.join(fallback_blanks)}. You can enter values to override these defaults.")
 
 # Predict and Reset buttons side-by-side
 col1, col2 = st.columns([1, 1])
